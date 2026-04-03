@@ -4,9 +4,9 @@ import { AUTH_PROVIDER } from '../constants/auth'
 
 export const authClient = createAuthClient()
 
-export const signInWithCognito = () => {
+export const signInWithGoogle = () => {
   return authClient.signIn.social({
-    provider: AUTH_PROVIDER.COGNITO,
+    provider: AUTH_PROVIDER.GOOGLE,
     callbackURL: `/dashboard`,
   })
 }

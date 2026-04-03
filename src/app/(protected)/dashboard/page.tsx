@@ -4,9 +4,9 @@ import { META } from '@/lib/constants/meta'
 
 export const metadata: Metadata = {
   ...META,
-  title: 'Home | Your Website Name',
+  title: 'Dashboard | Your Website Name',
 }
 
-export default function HomePage() {
-  return <div>HomePage</div>
+export default function DashboardPage() {
+  return <div>DashboardPage</div>
 }
