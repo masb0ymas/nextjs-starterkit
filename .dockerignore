@@ -1,0 +1,14 @@
+node_modules
+dist
+dist-server
+.git
+.gitignore
+!.env.example
+.vscode
+.idea
+.DS_Store
+*.log*
+.husky
+.rspack-profile-*
+README.md
+AGENTS.md
