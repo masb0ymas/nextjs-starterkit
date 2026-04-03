@@ -1,14 +1,13 @@
 import { createAuthClient } from 'better-auth/react'
 
 import { AUTH_PROVIDER } from '../constants/auth'
-import { LOCALE } from '../constants/i18n'
 
 export const authClient = createAuthClient()
 
-export const signInWithCognito = (locale: LOCALE) => {
+export const signInWithCognito = () => {
   return authClient.signIn.social({
     provider: AUTH_PROVIDER.COGNITO,
-    callbackURL: `/${locale}/dashboard`,
+    callbackURL: `/dashboard`,
   })
 }
 
