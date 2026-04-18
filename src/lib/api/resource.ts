@@ -4,7 +4,7 @@ import { env } from '@/config/env'
 import { HTTP_METHOD, ResourceMethods } from '@/types/api'
 
 import { AUTH_STORAGE_KEYS } from '../constants/auth'
-import { ServerFetchApi } from './server-fetch'
+import { ClientFetchApi } from './client-fetch'
 
 /**
  * Generate URL with joining path
@@ -16,24 +16,24 @@ export function generateURL(paths: string[]): string {
 }
 
 /**
- * Server Resource - Creates a REST API resource with CRUD operations.
+ * Client Resource - Creates a REST API resource with CRUD operations.
  * Only support single resource api endpoint.
  *
  * @param path
  * @param methods
  * @returns
  */
-export function serverResource<
+export function clientResource<
   TPath extends string,
   TMethods extends readonly HTTP_METHOD[],
   TData,
 >(path: TPath, methods: TMethods): ResourceMethods<TData> {
-  const serverFetch = new ServerFetchApi({
-    baseURL: String(env.API_URL),
+  const clientFetch = new ClientFetchApi({
+    baseURL: String(env.NEXT_PUBLIC_API_URL),
     storageKey: AUTH_STORAGE_KEYS.AUTH_STORAGE,
   }).default
 
-  return resource(serverFetch, path, methods)
+  return resource(clientFetch, path, methods)
 }
 
 /**
@@ -128,10 +128,10 @@ export function resources<TPaths extends string[], TMethods extends readonly HTT
   paths: TPaths,
   methods: TMethods
 ): Partial<ResourceMethods<TData>>[] {
-  const serverFetch = new ServerFetchApi({
-    baseURL: String(env.API_URL),
+  const clientFetch = new ClientFetchApi({
+    baseURL: String(env.NEXT_PUBLIC_API_URL),
     storageKey: AUTH_STORAGE_KEYS.AUTH_STORAGE,
   }).default
 
-  return paths.map((path) => resource(serverFetch, path, methods))
+  return paths.map((path) => resource(clientFetch, path, methods))
 }

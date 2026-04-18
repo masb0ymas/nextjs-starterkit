@@ -1,7 +1,9 @@
+import { accountQueries } from './account'
 import { categoryQueries } from './category'
 import { osmQueries } from './osm'
 
 export const queries = {
-  osm: osmQueries,
+  account: accountQueries,
   categories: categoryQueries,
+  osm: osmQueries,
 } as const

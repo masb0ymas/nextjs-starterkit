@@ -8,10 +8,11 @@ import { services } from '../services'
 const listCategories = (params?: PaginateDto) =>
   queryOptions({
     queryKey: ['categories', params],
-    queryFn: () => {
+    queryFn: async () => {
       const pagination = params ?? DEFAULT_PAGINATE
 
-      return services.categories.list(pagination)
+      const res = await services.categories.list(pagination)
+      return res.data
     },
   })
 
@@ -22,8 +23,9 @@ interface GetCategoryParams {
 const getCategory = (params: GetCategoryParams) =>
   queryOptions({
     queryKey: ['category', params.id],
-    queryFn: () => {
-      return services.categories.get(params.id)
+    queryFn: async () => {
+      const res = await services.categories.get(params.id)
+      return res.data
     },
   })
 

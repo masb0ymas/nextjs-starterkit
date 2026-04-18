@@ -1,11 +1,7 @@
-import 'server-only'
-
 import axios, { AxiosError, AxiosInstance } from 'axios'
 import { isEmpty } from 'lodash'
-import { headers } from 'next/headers'
 
-import { auth } from '../auth/auth-server'
-import { getAccessToken } from '../auth/handler'
+import { authClient, getAccessToken } from '../auth/auth-client'
 import { AUTH_STORAGE_KEYS } from '../constants/auth'
 import { ms } from '../date'
 
@@ -29,16 +25,12 @@ function createAxios({ baseURL, storageKey }: CreateAxiosProps) {
     axiosInstance.interceptors.request.use(async (config) => {
       const currentConfig = { ...config }
 
-      const session = await auth.api.getSession({
-        headers: await headers(),
-      })
+      const accessToken = await getAccessToken()
 
       // Check Session if exists
-      if (session) {
-        const data = await getAccessToken()
-
+      if (accessToken) {
         try {
-          currentConfig.headers.Authorization = `Bearer ${data?.accessToken}`
+          currentConfig.headers.Authorization = `Bearer ${accessToken}`
         } catch (error) {
           console.error(error)
         }
@@ -58,7 +50,10 @@ function createAxios({ baseURL, storageKey }: CreateAxiosProps) {
 
       if (error.response?.status === 401) {
         if (storageKey === AUTH_STORAGE_KEYS.AUTH_STORAGE) {
-          // TODO: handle refresh token
+          const res = await authClient.signOut()
+          if (res.data?.success) {
+            window.location.href = '/'
+          }
         }
         throw new Error('Unauthorized')
       }
@@ -77,10 +72,10 @@ function createAxios({ baseURL, storageKey }: CreateAxiosProps) {
 /**
  * Fetch API
  * @example
- * const fetchApi = new ServerFetchApi({ baseURL: 'https://api.example.com', storageKey: 'token' }).default
+ * const fetchApi = new ClientFetchApi({ baseURL: 'https://api.example.com', storageKey: 'token' }).default
  * fetchApi.get('/users')
  */
-export class ServerFetchApi {
+export class ClientFetchApi {
   private _axiosInstance: AxiosInstance | null
   private readonly _baseURL: string
   private readonly _storageKey?: string
