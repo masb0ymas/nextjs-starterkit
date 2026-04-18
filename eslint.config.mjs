@@ -24,7 +24,7 @@ const eslintConfig = defineConfig([
       'react/no-children-prop': 'off',
 
       // typescript
-      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/ban-ts-comment': 'off',
 
       // simple sort
