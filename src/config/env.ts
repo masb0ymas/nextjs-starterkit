@@ -7,9 +7,6 @@ export const env = createEnv({
    * Will throw if you access these variables on the client.
    */
   server: {
-    API_URL: z.url(),
-    OSM_API_URL: z.url(),
-
     BETTER_AUTH_URL: z.url(),
     BETTER_AUTH_SECRET: z.string(),
 
@@ -24,6 +21,8 @@ export const env = createEnv({
   client: {
     // No client-side env vars needed for this app
     // NEXT_PUBLIC_ prefix is to use in browser
+    NEXT_PUBLIC_API_URL: z.url(),
+    NEXT_PUBLIC_OSM_API_URL: z.url(),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -32,8 +31,8 @@ export const env = createEnv({
    * 💡 You'll get type errors if not all variables from `server` & `client` are included here.
    */
   runtimeEnv: {
-    API_URL: process.env.API_URL,
-    OSM_API_URL: process.env.OSM_API_URL,
+    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    NEXT_PUBLIC_OSM_API_URL: process.env.NEXT_PUBLIC_OSM_API_URL,
 
     BETTER_AUTH_URL: process.env.BETTER_AUTH_URL,
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
