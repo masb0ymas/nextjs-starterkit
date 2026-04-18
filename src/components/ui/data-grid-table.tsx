@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Cell, Column, flexRender, Header, HeaderGroup, Row } from '@tanstack/react-table'
 import { cva } from 'class-variance-authority'
 import * as React from 'react'
